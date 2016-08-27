@@ -2,8 +2,8 @@
 Islog=0 #是否启用日志，默认为0（0：否；1：是）
 tmr=15 #检测周期（秒）
 count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
-fail=0
 echo "-----------------------check start------------------"
+fail=0
 while true
 do
     x=`ps aux| grep ETMDaemon | grep -v grep | grep -v check | wc -l`  # 计算进程数
