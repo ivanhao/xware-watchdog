@@ -21,7 +21,7 @@ do
 	    fi
             sleep $tmr
             let fail=0
-        else #大于等于四个连接失败
+        else #大于等于四个连接失败，或监听进程少于3个
 	    ((fail++))
 	    if [ $Islog -eq 1 ];then
                 echo `date "+%Y-%m-%d %H:%M:%S"`" Unormal! "$fail
