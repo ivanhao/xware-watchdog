@@ -34,6 +34,6 @@ do
             echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!">>$cur_dir/watchdog.log
 	fi
 	let fail=1
-	sleep $tmr
+	sleep $tmr*2 #刚重启完，间隔可以久点
     fi
 done
