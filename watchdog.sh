@@ -33,7 +33,7 @@ do
 	if [ $Islog -eq 1 ];then
             echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!">>$cur_dir/watchdog.log
 	fi
-	let y=1
+	let fail=1
 	sleep $tmr
     fi
 done
