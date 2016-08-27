@@ -1,4 +1,5 @@
 #!/bin/bash
+Islog=0 #是否启用日志，默认为0（0：否；1：是）
 cur_dir=$(cd "$(dirname "$0")"; pwd)
 echo "-----------------------check start------------------"
 y=1
@@ -13,16 +14,22 @@ do
     then
         if [ $t -lt 4 ] #如果小于四个连接失败
         then
-            echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!">>$cur_dir/watchdog.log
+	    if [ $Islog -eq 1 ];then
+                echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!">>$cur_dir/watchdog.log
+	    fi
             sleep 30
         else #大于等于四个连接失败
             y=$[$y+1] 
-            echo `date "+%Y-%m-%d %H:%M:%S"`" Unormal!">>$cur_dir/watchdog.log
+	    if [ $Islog -eq 1 ];then
+                echo `date "+%Y-%m-%d %H:%M:%S"`" Unormal!">>$cur_dir/watchdog.log
+	    fi
 	    sleep 30
         fi
     else
         $cur_dir/portal
-        echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!">>$cur_dir/watchdog.log
+	if [ $Islog -eq 1 ];then
+            echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!">>$cur_dir/watchdog.log
+	fi
 	let y=1
 	sleep 30
     fi
