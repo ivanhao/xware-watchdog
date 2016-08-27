@@ -1,7 +1,7 @@
 #!/bin/bash
 Islog=0 #是否启用日志，默认为0（0：否；1：是）
 tmr=15 #检测周期（秒）
-count=3 #允许几次检测失败（建议不要小于2，否则容易频繁重启）
+count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
 fail=1
 cur_dir=$(cd "$(dirname "$0")"; pwd)
 echo "-----------------------check start------------------"
@@ -21,6 +21,7 @@ do
                 echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!">>$cur_dir/watchdog.log
 	    fi
             sleep $tmr
+            let fail=1
         else #大于等于四个连接失败
 	    ((fail++))
 	    if [ $Islog -eq 1 ];then
