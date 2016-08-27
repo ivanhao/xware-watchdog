@@ -1,5 +1,5 @@
 #!/bin/bash
-Islog=1 #是否启用日志，默认为0（0：否；1：是）
+Islog=0 #是否启用日志，默认为0（0：否；1：是）
 tmr=15 #检测周期（秒）
 count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
 echo "-----------------------check start------------------"
@@ -23,6 +23,10 @@ do
 	    fi
 	    let fail=0
             sleep $tmr
+<<<<<<< HEAD
+=======
+            let fail=0
+>>>>>>> 88e3a2da8ca013ca2c9d216a402e4d9f66ce34bc
         else #大于等于四个连接失败，或监听进程少于3个
 	    ((fail++))
 	    if [ $Islog -eq 1 ];then
@@ -36,7 +40,11 @@ do
             echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!"
 	fi
 	let fail=0
+<<<<<<< HEAD
 	sleep $tmr 
+=======
+	sleep $tmr #刚重启完，间隔可以久点
+>>>>>>> 88e3a2da8ca013ca2c9d216a402e4d9f66ce34bc
 	sleep $tmr #刚重启完，间隔可以久点
     fi
 done
