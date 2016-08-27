@@ -3,7 +3,6 @@ Islog=0 #是否启用日志，默认为0（0：否；1：是）
 tmr=15 #检测周期（秒）
 count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
 fail=0
-cur_dir=$(cd "$(dirname "$0")"; pwd)
 echo "-----------------------check start------------------"
 while true
 do
@@ -18,21 +17,21 @@ do
         if ( [ $t -lt 4 ] && [ $listen -gt 2 ] ) #如果小于四个连接失败，并且监听进程不少于3个
         then
 	    if [ $Islog -eq 1 ];then
-                echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!">>$cur_dir/watchdog.log
+                echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!"
 	    fi
             sleep $tmr
             let fail=0
         else #大于等于四个连接失败
 	    ((fail++))
 	    if [ $Islog -eq 1 ];then
-                echo `date "+%Y-%m-%d %H:%M:%S"`" Unormal! "$fail>>$cur_dir/watchdog.log
+                echo `date "+%Y-%m-%d %H:%M:%S"`" Unormal! "$fail
 	    fi
 	    sleep $tmr
         fi
     else
         $cur_dir/portal
 	if [ $Islog -eq 1 ];then
-            echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!">>$cur_dir/watchdog.log
+            echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!"
 	fi
 	let fail=0
 	sleep $tmr #刚重启完，间隔可以久点
