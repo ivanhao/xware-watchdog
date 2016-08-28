@@ -14,7 +14,7 @@ do
     listen=`netstat -nap|grep Emb|grep LISTEN|awk 'BEGIN{t=0;} { t++; }  END{print t; }'`  # 有几个监听的进程
     es=`netstat -nap|grep Emb|grep ESTABLISH|awk 'BEGIN{t=0;} { t++; }  END{print t; }'`  # 有几个监听的进程
     let c=$x+$y+$z # 进程相加要大于7个
-    let check=$t-$es
+    let check=$t-$es #连接失败的数量减连接成功数量，正常应该大于0，如果小于0基本前台就异常了
     if ( [ $fail -lt $count ] && [ $c -gt 3 ] && [ $x -gt 0 ] && [ $y -gt 0 ] && [ $z -gt 0 ] ) #检测连接失败计数器是否超标，并且进程是否足够
     then
         if ( ( [ $t -lt 4 ] || [ $check -gt 0 ] ) && [ $listen -gt 2 ] )  #如果小于四个连接失败或者失败数大于成功数，并且监听进程不少于3个
