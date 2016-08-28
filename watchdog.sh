@@ -1,8 +1,9 @@
 #!/bin/bash
-Islog=1 #是否启用日志，默认为0（0：否；1：是）
+logmode=1 #是否启用日志，默认为1（0：否；1：警告；2：debug）
 tmr=15 #检测周期（秒）
 count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
 echo "-----------------------check start------------------"
+echo `date "+%Y-%m-%d %H:%M:%S"`" start log."
 fail=0
 while true
 do
@@ -16,23 +17,23 @@ do
     let check=$t-$es
     if ( [ $fail -lt $count ] && [ $c -gt 3 ] && [ $x -gt 0 ] && [ $y -gt 0 ] && [ $z -gt 0 ] ) #检测连接失败计数器是否超标，并且进程是否足够
     then
-        if (( [ $t -lt 4 ] || [ $check -gt 0 ] ) && [ $listen -gt 2 ] ) #如果小于四个连接失败或者失败数大于成功数，并且监听进程不少于3个
+        if ( ( [ $t -lt 4 ] || [ $check -gt 0 ] ) && [ $listen -gt 2 ] )  #如果小于四个连接失败或者失败数大于成功数，并且监听进程不少于3个
         then
-	    if [ $Islog -eq 1 ];then
+	    if [ $logmode -eq 2 ];then
                 echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!"
 	    fi
 	    let fail=0
             sleep $tmr
         else #大于等于四个连接失败，或监听进程少于3个
 	    ((fail++))
-	    if [ $Islog -eq 1 ];then
+	    if [ $logmode -ne 0 ];then
                 echo `date "+%Y-%m-%d %H:%M:%S"`" Unormal! "$fail
 	    fi
 	    sleep $tmr
         fi
     else
         $cur_dir/portal
-	if [ $Islog -eq 1 ];then
+	if [ $logmode -ne 0 ];then
             echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!"
 	fi
 	let fail=0
