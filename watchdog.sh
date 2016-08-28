@@ -1,5 +1,5 @@
 #!/bin/bash
-logmode=1 #是否启用日志，默认为1（0：否；1：警告；2：debug） 
+logmode=1 #是否启用日志，默认为1（0：否；1：警告；2：debug）
 tmr=15 #检测周期（秒）
 count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
 echo "-----------------------check start------------------"
@@ -12,7 +12,7 @@ do
     z=`ps aux| grep EmbedThunderManager | grep -v grep | grep -v check | wc -l`  # 计算进程数
     t=`netstat -nap|grep Emb|grep CLOSE|awk 'BEGIN{t=0;} { t++; }  END{print t; }'`  # 有几个连接失败的进程
     listen=`netstat -nap|grep Emb|grep LISTEN|awk 'BEGIN{t=0;} { t++; }  END{print t; }'`  # 有几个监听的进程
-    es=`netstat -nap|grep Emb|grep ESTABLISH|awk 'BEGIN{t=0;} { t++; }  END{print t; }'`  # 有几个监听的进程
+    es=`netstat -nap|grep Emb|grep ESTABLISH|awk 'BEGIN{t=0;} { t++; }  END{print t; }'`  # 有几个连接成功的进程
     let c=$x+$y+$z # 进程相加要大于7个
     let check=$t-$es #连接失败的数量减连接成功数量，正常应该大于0，如果小于0基本前台就异常了
     if ( [ $fail -lt $count ] && [ $c -gt 3 ] && [ $x -gt 0 ] && [ $y -gt 0 ] && [ $z -gt 0 ] ) #检测连接失败计数器是否超标，并且进程是否足够
