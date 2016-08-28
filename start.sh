@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh 
 cur_dir=$(cd "$(dirname "$0")"; pwd)
 echo $cur_dir
 kill -9 `ps aux|grep watchdog.sh|awk '{print $2}'`
