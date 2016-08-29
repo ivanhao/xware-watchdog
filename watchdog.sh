@@ -2,7 +2,13 @@
 logmode=2 #是否启用日志，默认为1（0：否；1：警告；2：debug）
 tmr=30 #检测周期（秒）
 count=3 #允许几次检测失败（建议不要小于3，否则容易频繁重启）
-echo "-----------------------check start------------------"
+echo "--------------------check start------------------"
+if [ $logmode -eq 2 ];then # debug模式输出
+    echo "--------------------debug mode-------------------"
+fi
+if [ $logmode -eq 1 ];then # warnning模式输出
+    echo "--------------------warnning mode-------------------"
+fi
 echo `date "+%Y-%m-%d %H:%M:%S"`" start log."
 cur_dir=$(cd "$(dirname "$0")"; pwd)
 fail=0
@@ -17,8 +23,7 @@ do
     let c=$x+$y+$z # 进程相加要大于7个
     let check=$t-$es #连接失败的数量减连接成功数量，正常应该大于0，如果小于0基本前台就异常了
 ############################----------DEBUG INFO-----------------############################
-    if [ $logmode -ne 0 ];then # debug模式输出
-	echo "--------------------debug info-------------------"
+    if [ $logmode -eq 2 ];then # debug模式输出
     	if ( [ $fail -gt $count ] ) #检测连接失败计数器是否超标，并且进程是否足够
 	then
 	    echo `date "+%Y-%m-%d %H:%M:%S"`" 检测到非正常状态超过设置的最大次数!"
