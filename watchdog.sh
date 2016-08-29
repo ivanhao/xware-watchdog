@@ -5,7 +5,7 @@ count=3 #允许几次检测失败（建议不要小于3，否则容易频繁重�
 cur_dir=$(cd "$(dirname "$0")"; pwd)
 echo "--------------------check start------------------">> $cur_dir/watchdog.log
 if [ $logmode -eq 2 ];then # debug模式输出
-    echo "--------------------debug mode-------------------">> $cur_dir/watchdog.log 
+    echo "--------------------debug mode-------------------">> $cur_dir/watchdog.log
 fi
 if [ $logmode -eq 1 ];then # warnning模式输出
     echo "--------------------warnning mode-------------------">> $cur_dir/watchdog.log
