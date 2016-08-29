@@ -1,4 +1,5 @@
 #!/bin/bash
+<<<<<<< HEAD
 logmode=2 #是否启用日志，默认为1（0：否；1：警告；2：debug）
 tmr=30 #检测周期（秒）
 count=3 #允许几次检测失败（建议不要小于3，否则容易频繁重启）
@@ -11,6 +12,13 @@ if [ $logmode -eq 1 ];then # warnning模式输出
     echo "--------------------warnning mode-------------------">> $cur_dir/watchdog.log
 fi
 echo `date "+%Y-%m-%d %H:%M:%S"`" start log.">> $cur_dir/watchdog.log
+=======
+logmode=1 #是否启用日志，默认为1（0：否；1：警告；2：debug）
+tmr=30 #检测周期（秒）
+count=5 #允许几次检测失败（建议不要小于5，否则容易频繁重启）
+echo "-----------------------check start------------------"
+echo `date "+%Y-%m-%d %H:%M:%S"`" start log."
+>>>>>>> 578b689c07779461277a25d83f6f49a3739bcae0
 fail=0
 while true
 do
