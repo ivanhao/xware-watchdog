@@ -7,3 +7,6 @@ logmode=2 #是否启用日志，默认为2（0：否；1：警告；2：debug）
 tmr=30 #检测周期（秒）
 
 count=3 #允许几次检测失败（建议不要小于3，否则容易频繁重启）
+
+### 附：迅雷远程xware1.0.31下载地址：
+http://dl.lazyzhu.com/file/Thunder/Xware/1.0.31/
