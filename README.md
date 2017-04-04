@@ -5,6 +5,49 @@
 1. 启动\重启：`./start.sh`
 2. 停止：`./stop.sh`
 
+### 设置开机自动启动：
+假设xware目录为`/opt/xware`，将如下的内容存到`/etc/init.d`下，命名为`xware`:
+```
+#!/bin/sh 
+### BEGIN INIT INFO
+# Provides: xware
+# Required-Start: $network $remote_fs $syslog $time
+# Required-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: xware
+### END INIT INFO
+SERVICE_USE_PID=1
+
+START=50
+
+start() {
+        /bin/bash /opt/xware/start.sh
+}
+
+stop() {
+        /opt/xware/stop.sh
+}
+
+case "$1" in
+ start)
+        start
+        ;;
+ stop)
+        stop
+        ;;
+
+ *)
+        echo $"Usage: $0 {start|stop}"  
+        exit 1
+        ;;
+esac
+```
+
+1. 启动\重启：sudo xware start
+2. 停止：sudo xware stop
+默认是开机自动启动
+
 ### 注：在watchdog.sh中有几个变量
 logmode=2 #是否启用日志，默认为2（0：否；1：警告；2：debug）。日志watchdog.log保存在当前目录。debug模式日志量较大。测试稳定后，最好改为0，以免出现写日志时意外断电的极端情况下对磁盘造成的损坏。
 
