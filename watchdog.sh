@@ -1,6 +1,6 @@
 #!/bin/bash
-logmode=2 #是否启用日志，默认为1（0：否；1：警告；2：debug）
-tmr=30 #检测周期（秒）
+logmode=1 #是否启用日志，默认为1（0：否；1：警告；2：debug）
+tmr=10 #检测周期（秒）
 count=3 #允许几次检测失败（建议不要小于3，否则容易频繁重启）
 cur_dir=$(cd "$(dirname "$0")"; pwd)
 echo "--------------------check start------------------">> $cur_dir/watchdog.log
@@ -48,15 +48,15 @@ do
 	then
             echo `date "+%Y-%m-%d %H:%M:%S"`" 失败连接数:"$cl"大于等于成功的连接数:"$es"！">> $cur_dir/watchdog.log
 	fi
-	if ( [ $listen -le 2 ] ) 
+	if ( [ $listen -lt 3 ] ) 
 	then
-            echo `date "+%Y-%m-%d %H:%M:%S"`" 监听数"$listen"小于等于2！">> $cur_dir/watchdog.log
+            echo `date "+%Y-%m-%d %H:%M:%S"`" 监听数"$listen"小于3！">> $cur_dir/watchdog.log
 	fi
     fi
 ###########################------------DEBUG INFO END-------------###########################
-    if ( [ $fail -lt $count ] && [ $x -gt 0 ] && [ $y -gt 0 ] && [ $z -gt 0 ] ) #检测连接失败计数器是否超标，并且进程是否足够
+    if ( [ $fail -lt $count ] ) #检测连接失败计数器是否超标，并且进程是否足够
     then
-        if (  [ $cl -lt 4 ] && [ $check -gt 0 ]  && [ $listen -gt 2 ] )  #如果小于四个连接失败或者失败数大于成功数或者监听进程不少于3个
+        if (  [ $cl -lt 4 ] && [ $check -gt 0 ]  && [ $listen -ge 3 ] && [ $x -gt 0 ] && [ $y -gt 0 ] && [ $z -gt 0 ] )  #如果小于四个连接失败或者失败数大于成功数或者监听进程不少于3个
         then
 	    if [ $logmode -eq 2 ];then
                 echo `date "+%Y-%m-%d %H:%M:%S"`" Xware OK!">> $cur_dir/watchdog.log
@@ -74,9 +74,8 @@ do
 	if [ $logmode -ne 0 ];then
             echo `date "+%Y-%m-%d %H:%M:%S"`" Restart Xware!!!">> $cur_dir/watchdog.log
 	fi
-        $cur_dir/portal
+        $cur_dir/portal>>$cur_dir/watchdog.log
 	let fail=0
-	sleep $tmr 
-	sleep $tmr #刚重启完，间隔可以久点
+	sleep $tmr*3 #刚重启完，间隔可以久点
     fi
 done
