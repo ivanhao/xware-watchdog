@@ -1,7 +1,7 @@
 # xware-watchdog
 这是一个为迅雷远程xware1.0x版本写的守护程序，使用方法是将start.sh、stop.sh和watchdog.sh拷到xware的程序文件夹下（跟portal放一起）。运行start.sh即可。程序定期检测一次。
 
-** Xware1.0.31_netgear_6300v2.zip是armv7的迅雷远程固件，树莓派、香蕉派可用。解压后可用。 **
+* Xware1.0.31_netgear_6300v2.zip是armv7的迅雷远程固件，树莓派、香蕉派可用。解压后可用。 *
 
 ### 用法：
 1. 启动\重启：`./start.sh`
